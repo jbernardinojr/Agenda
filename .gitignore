@@ -165,4 +165,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+#Idea
+.idea/
+
 # End of https://www.gitignore.io/api/linux,windows,androidstudio
