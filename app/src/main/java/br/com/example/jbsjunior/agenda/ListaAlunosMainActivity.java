@@ -1,9 +1,12 @@
 package br.com.example.jbsjunior.agenda;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
@@ -62,7 +65,7 @@ public class ListaAlunosMainActivity extends AppCompatActivity {
         mAlunos = dao.getAlunos();
         dao.close();
         Collections.sort(mAlunos);
-        ArrayAdapter<Aluno> adapter = new ArrayAdapter<> (this, android.R.layout.simple_expandable_list_item_1, mAlunos);
+        ArrayAdapter<Aluno> adapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, mAlunos);
         mListaAlunos.setAdapter(adapter);
     }
 
@@ -91,19 +94,44 @@ public class ListaAlunosMainActivity extends AppCompatActivity {
             site = "http://" + site;
         }
 
-        MenuItem itemVisita = menu.add("Visitar Site");
-        Intent visitaSiteIntent = new Intent(Intent.ACTION_VIEW);
-        visitaSiteIntent.setData(Uri.parse(site));
-        itemVisita.setIntent(visitaSiteIntent);
+        MenuItem itemLigar = menu.add("Ligar");
+        itemLigar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                if (ActivityCompat.checkSelfPermission(ListaAlunosMainActivity.this, Manifest.permission.CALL_PHONE)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    ActivityCompat.requestPermissions(ListaAlunosMainActivity.this,
+                            new String[]{Manifest.permission.CALL_PHONE}, 123);
+                } else {
+                    Intent intentLigar = new Intent(Intent.ACTION_CALL);
+                    intentLigar.setData(Uri.parse("tel:" + aluno.getPhone()));
+                    startActivity(intentLigar);
+                }
+                return false;
+            }
+        });
 
         MenuItem itemSms = menu.add("Enviar SMS");
         Intent intentSms = new Intent(Intent.ACTION_VIEW);
         intentSms.setData(Uri.parse("sms:" + aluno.getPhone()));
         itemSms.setIntent(intentSms);
 
+        MenuItem itemVisita = menu.add("Visitar Site");
+        Intent visitaSiteIntent = new Intent(Intent.ACTION_VIEW);
+        visitaSiteIntent.setData(Uri.parse(site));
+        itemVisita.setIntent(visitaSiteIntent);
+
         MenuItem itemMapa = menu.add("Visualizar no mapa");
         Intent intentMapa = new Intent(Intent.ACTION_VIEW);
-        intentMapa.setData(Uri.parse("geo:0,0?q=" + aluno.getAddress()));
+        intentMapa.setData(Uri.parse("geo:0,0?z=14&q=" + aluno.getAddress()));
         itemMapa.setIntent(intentMapa);
 
         MenuItem delete = menu.add("Deletar");
