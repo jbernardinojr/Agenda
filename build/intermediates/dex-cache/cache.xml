@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\JBSJunior\.android\build-cache\70f32aad2e87c163cc061ad168346b961eba260a\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="38789e20ace9ab7dbd00554bd2673ab424478d3b">
+        <dex dex="C:\Users\JBSJunior\github_repos\Agenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_6607da89824d72c31bace9ba7422e7bb0563135a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\JBSJunior\github_repos\Agenda\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="0b2499fc4b039192923667013bec82607175e527">
+        <dex dex="C:\Users\JBSJunior\github_repos\Agenda\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_1471cff4b3ccc8f9ecdb6b53a4fca49ef8913c03\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\JBSJunior\.android\build-cache\e35e0b3c2ab1f72b65c67a2824cac6a4f06e37a6\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d4cf6227dd6a2ceff0f7dcf0c324380b7abf2c28">
+        <dex dex="C:\Users\JBSJunior\github_repos\Agenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_85401fdc36f77b396e64b3c13632255d2d1f7086\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\JBSJunior\github_repos\Agenda\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c82741bc129dd5f99f11a4ab8666ae24262053b6">
+        <dex dex="C:\Users\JBSJunior\github_repos\Agenda\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_abf01807f190f4ca4427db49eddb0df554454fca\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\JBSJunior\.android\build-cache\fb2d20ae62fb9c1556731f59a1a88e9f93fa3a97\output\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="95519720620b553f63afc789beba9ad582807f7c">
+        <dex dex="C:\Users\JBSJunior\github_repos\Agenda\app\build\intermediates\transforms\dex\debug\folders\1000\10\classes_3f7eaf1ccba90cf6093681b9e0ed8bdaf60c1619\classes.dex" />
+    </item>
+
+</items>
