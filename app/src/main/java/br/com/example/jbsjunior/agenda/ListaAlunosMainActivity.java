@@ -18,6 +18,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.facebook.stetho.Stetho;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -58,6 +60,10 @@ public class ListaAlunosMainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        if (BuildConfig.DEBUG){
+            Stetho.initializeWithDefaults(this);
+        }
     }
 
     private void loadListAlunos() {
