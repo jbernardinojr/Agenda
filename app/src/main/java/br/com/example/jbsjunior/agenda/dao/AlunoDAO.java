@@ -19,7 +19,7 @@ import br.com.example.jbsjunior.agenda.model.Aluno;
 public class AlunoDAO extends SQLiteOpenHelper{
 
     // If you change the database schema, you must increment the database version.
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     static final String DATABASE_NAME = "agenda.db";
 
 
@@ -35,16 +35,22 @@ public class AlunoDAO extends SQLiteOpenHelper{
                 "address TEXT, " +
                 "email TEXT, " +
                 "phone TEXT, " +
-                "nota REAL);";
+                "nota REAL, " +
+                "caminhoFoto TEXT);";
 
         db.execSQL(SQL_CREATE_ALUNO_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        final String SQL_DROP_TABLE_ALUNO = "DROP TABLE IF EXISTS Aluno";
-        db.execSQL(SQL_DROP_TABLE_ALUNO);
-        onCreate(db);
+
+        String sql = "";
+
+        switch (oldVersion) {
+            case 1:
+                sql = "ALTER TABLE Aluno ADD COLUMN caminhoFoto TEXT";
+                db.execSQL(sql); //update to version 2
+        }
     }
 
     public long insert (Aluno aluno) {
@@ -63,6 +69,7 @@ public class AlunoDAO extends SQLiteOpenHelper{
         cv.put("email", aluno.getEmail());
         cv.put("phone", aluno.getPhone());
         cv.put("nota", aluno.getNota());
+        cv.put("caminhoFoto", aluno.getCaminhoFoto());
         return cv;
     }
 
@@ -84,6 +91,7 @@ public class AlunoDAO extends SQLiteOpenHelper{
                 aluno.setAddress(cursor.getString(cursor.getColumnIndex("address")));
                 aluno.setEmail(cursor.getString(cursor.getColumnIndex("email")));
                 aluno.setPhone(cursor.getString(cursor.getColumnIndex("phone")));
+                aluno.setCaminhoFoto(cursor.getString(cursor.getColumnIndex("caminhoFoto")));
                 alunos.add(aluno);
             }while (cursor.moveToNext());
         }

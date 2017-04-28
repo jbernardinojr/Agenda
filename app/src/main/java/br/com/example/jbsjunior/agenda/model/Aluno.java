@@ -16,6 +16,7 @@ public class Aluno implements Comparable, Parcelable {
     private String email;
     private String phone;
     private Double nota;
+    private String caminhoFoto;
 
     public Aluno(){}
 
@@ -26,6 +27,7 @@ public class Aluno implements Comparable, Parcelable {
         email = in.readString();
         phone = in.readString();
         nota = in.readDouble();
+        caminhoFoto = in.readString();
     }
 
     public Long getId() {
@@ -76,6 +78,16 @@ public class Aluno implements Comparable, Parcelable {
         this.nota = nota;
     }
 
+
+    public String getCaminhoFoto() {
+        return caminhoFoto;
+    }
+
+    public void setCaminhoFoto(String caminhoFoto) {
+        this.caminhoFoto = caminhoFoto;
+    }
+
+
     @Override
     public String toString() {
         return getId() + " - " + getName();
@@ -100,6 +112,7 @@ public class Aluno implements Comparable, Parcelable {
         dest.writeString(email);
         dest.writeString(phone);
         dest.writeDouble(nota);
+        dest.writeString(caminhoFoto);
     }
 
     public static final Creator<Aluno> CREATOR = new Creator<Aluno>() {

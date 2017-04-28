@@ -1,23 +1,37 @@
 package br.com.example.jbsjunior.agenda;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Toast;
+
+import java.io.File;
 
 import br.com.example.jbsjunior.agenda.dao.AlunoDAO;
 import br.com.example.jbsjunior.agenda.model.Aluno;
 
 public class FormularioActivity extends AppCompatActivity {
 
+    public static final int CAMERA_REQUEST_CODE = 567;
     ViewHolder mViewHolder;
     Aluno mAluno;
+    private String caminhoFoto;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +45,25 @@ public class FormularioActivity extends AppCompatActivity {
         mAluno = (Aluno) intent.getParcelableExtra("aluno");
         if (mAluno != null) {
             mViewHolder.setFieldsAluno(mAluno);
+        }
+
+        FloatingActionButton botaoFoto = (FloatingActionButton) findViewById(R.id.formulario_fb_foto);
+        botaoFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                caminhoFoto = getExternalFilesDir(null) + "/" + System.currentTimeMillis() + ".jpg";
+                File arquivoFoto = new File(caminhoFoto);
+                intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(arquivoFoto));
+                startActivityForResult(intentCamera, CAMERA_REQUEST_CODE);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            mViewHolder.setCampoFoto(caminhoFoto);
         }
     }
 
@@ -76,6 +109,7 @@ public class FormularioActivity extends AppCompatActivity {
         EditText editEmail;
         EditText editPhone;
         RatingBar ratingBar;
+        ImageView campoFoto;
 
         Aluno aluno;
 
@@ -85,6 +119,8 @@ public class FormularioActivity extends AppCompatActivity {
             editEmail = (EditText) fa.findViewById(R.id.edt_email);
             editPhone = (EditText) fa.findViewById(R.id.edt_phone);
             ratingBar = (RatingBar) fa.findViewById(R.id.rtg_bar);
+            campoFoto = (ImageView) fa.findViewById(R.id.formulario_foto);
+            aluno = new Aluno();
         }
 
         public Aluno getAluno() {
@@ -93,6 +129,7 @@ public class FormularioActivity extends AppCompatActivity {
             aluno.setEmail(editEmail.getText().toString());
             aluno.setPhone(editPhone.getText().toString());
             aluno.setNota(Double.valueOf(ratingBar.getProgress()));
+            aluno.setCaminhoFoto((String) campoFoto.getTag());
             return aluno;
         }
 
@@ -102,7 +139,19 @@ public class FormularioActivity extends AppCompatActivity {
             editAddress.setText(aluno.getAddress());
             editEmail.setText(aluno.getEmail());
             ratingBar.setProgress(aluno.getNota().intValue());
+            setCampoFoto(aluno.getCaminhoFoto());
             this.aluno = aluno;
+        }
+
+        public void setCampoFoto(String caminhoFoto) {
+
+            if (caminhoFoto != null) {
+                Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
+                Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+                campoFoto.setImageBitmap(bitmapReduzido);
+                campoFoto.setScaleType(ImageView.ScaleType.FIT_XY);
+                campoFoto.setTag(caminhoFoto);
+            }
         }
     }
 }
