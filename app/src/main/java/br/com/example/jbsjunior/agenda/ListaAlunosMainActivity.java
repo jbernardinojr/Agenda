@@ -23,6 +23,7 @@ import com.facebook.stetho.Stetho;
 import java.util.Collections;
 import java.util.List;
 
+import br.com.example.jbsjunior.agenda.adapter.AlunosAdapter;
 import br.com.example.jbsjunior.agenda.dao.AlunoDAO;
 import br.com.example.jbsjunior.agenda.model.Aluno;
 
@@ -71,7 +72,8 @@ public class ListaAlunosMainActivity extends AppCompatActivity {
         mAlunos = dao.getAlunos();
         dao.close();
         Collections.sort(mAlunos);
-        ArrayAdapter<Aluno> adapter = new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, mAlunos);
+
+        AlunosAdapter adapter = new AlunosAdapter(this, mAlunos);
         mListaAlunos.setAdapter(adapter);
     }
 
