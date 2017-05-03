@@ -9,12 +9,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,11 +24,13 @@ import java.util.Collections;
 import java.util.List;
 
 import br.com.example.jbsjunior.agenda.adapter.AlunosAdapter;
+import br.com.example.jbsjunior.agenda.converter.AlunoConverter;
 import br.com.example.jbsjunior.agenda.dao.AlunoDAO;
 import br.com.example.jbsjunior.agenda.model.Aluno;
 
 public class ListaAlunosMainActivity extends AppCompatActivity {
 
+    public static final int REQUEST_CODE_SMS = 456;
     List<Aluno> mAlunos;
     ListView mListaAlunos;
 
@@ -64,6 +66,14 @@ public class ListaAlunosMainActivity extends AppCompatActivity {
 
         if (BuildConfig.DEBUG){
             Stetho.initializeWithDefaults(this);
+        }
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.RECEIVE_SMS},
+                        REQUEST_CODE_SMS);
         }
     }
 
@@ -166,9 +176,18 @@ public class ListaAlunosMainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.menu_enviar_notas:
+                String json = "";
+
+                AlunoDAO  dao = new AlunoDAO(this);
+                List<Aluno> alunos = dao.getAlunos();
+                dao.close();
+                AlunoConverter converter = new AlunoConverter();
+                json = converter.convertToJson(alunos);
+
+                Log.d("Bernardino", json);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
