@@ -1,4 +1,4 @@
-package br.com.example.jbsjunior.agenda;
+package br.com.example.jbsjunior.agenda.converter;
 
 import org.json.JSONException;
 import org.json.JSONStringer;

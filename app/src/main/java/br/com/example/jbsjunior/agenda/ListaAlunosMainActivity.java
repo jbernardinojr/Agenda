@@ -178,18 +178,10 @@ public class ListaAlunosMainActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.menu_enviar_notas:
-                String json = "";
-
-                AlunoDAO  dao = new AlunoDAO(this);
-                List<Aluno> alunos = dao.getAlunos();
-                dao.close();
-                AlunoConverter converter = new AlunoConverter();
-                json = converter.convertToJson(alunos);
-
-                Log.d("Bernardino", json);
+                WebClient post = new WebClient(this);
+                post.execute();
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
