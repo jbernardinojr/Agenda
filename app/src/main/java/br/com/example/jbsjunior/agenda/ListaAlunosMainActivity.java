@@ -181,6 +181,10 @@ public class ListaAlunosMainActivity extends AppCompatActivity {
                 WebClient post = new WebClient(this);
                 post.execute();
                 break;
+            case R.id.menu_baixar_provas:
+                Intent intent = new Intent(this, ProvasActivity.class);
+                startActivity(intent);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

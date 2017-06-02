@@ -26,6 +26,8 @@ public class AlunosAdapter extends BaseAdapter {
     private ImageView mCampoFoto;
     private TextView mNomeAluno;
     private TextView mTelefone;
+    private TextView mEmailSite;
+    private TextView mAddress;
 
     public AlunosAdapter(Context context, List<Aluno> alunos) {
         this.mContext = context;
@@ -57,12 +59,23 @@ public class AlunosAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.list_item, parent, false);
         }
 
-        mCampoFoto = (ImageView) view.findViewById(R.id.item_foto);
         mNomeAluno = (TextView) view.findViewById(R.id.item_nome);
-        mTelefone = (TextView) view.findViewById(R.id.item_telefone);
         mNomeAluno.setText(aluno.getName());
+
+        mTelefone = (TextView) view.findViewById(R.id.item_telefone);
         mTelefone.setText(aluno.getPhone());
 
+        mAddress = (TextView) view.findViewById(R.id.item_address);
+        if (mAddress != null) {
+            mAddress.setText(aluno.getAddress());
+        }
+
+        mEmailSite = (TextView) view.findViewById(R.id.item_email);
+        if(mEmailSite != null) {
+            mEmailSite.setText(aluno.getEmail());
+        }
+
+        mCampoFoto = (ImageView) view.findViewById(R.id.item_foto);
         String caminhoFoto = aluno.getCaminhoFoto();
         if (caminhoFoto != null) {
             Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
