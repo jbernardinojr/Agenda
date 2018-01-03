@@ -17,7 +17,7 @@ public class DetalhesProvaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detalhes_prova);
 
         Intent intent = getIntent();
-        Prova prova = (Prova) intent.getParcelableExtra("prova");
+        Prova prova = intent.getParcelableExtra("prova");
 
         TextView materia = (TextView) findViewById(R.id.tv_detalhes_prova_materia);
         TextView data = (TextView) findViewById(R.id.tv_detalhes_prova_data);
