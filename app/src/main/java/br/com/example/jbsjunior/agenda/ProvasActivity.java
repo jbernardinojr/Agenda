@@ -39,6 +39,7 @@ public class ProvasActivity extends AppCompatActivity {
 
             FragmentTransaction tx = fm.beginTransaction();
             tx.replace(R.id.frame_principal, detalhesProvaFragment);
+            tx.addToBackStack(null);
             tx.commit();
         } else {
             detalhesProvaFragment = (DetalhesProvaFragment)
