@@ -32,4 +32,22 @@ public class AlunoConverter {
         return js.toString();
     }
 
+    public String convertToJsonCompleto(Aluno aluno) {
+
+        JSONStringer js = new JSONStringer();
+
+        try {
+            js.object().key("nome").value(aluno.getName())
+                    .key("endereco").value(aluno.getAddress())
+                    .key("site").value(aluno.getEmail())
+                    .key("telefone").value(aluno.getPhone())
+                    .key("nota").value(aluno.getNota())
+                    .endObject();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return js.toString();
+
+    }
 }

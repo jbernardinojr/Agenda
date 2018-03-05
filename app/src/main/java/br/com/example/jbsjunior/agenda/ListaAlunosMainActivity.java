@@ -27,6 +27,7 @@ import br.com.example.jbsjunior.agenda.adapter.AlunosAdapter;
 import br.com.example.jbsjunior.agenda.converter.AlunoConverter;
 import br.com.example.jbsjunior.agenda.dao.AlunoDAO;
 import br.com.example.jbsjunior.agenda.model.Aluno;
+import br.com.example.jbsjunior.agenda.task.EnviaAlunosTask;
 
 public class ListaAlunosMainActivity extends AppCompatActivity {
 
@@ -178,8 +179,7 @@ public class ListaAlunosMainActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.menu_enviar_notas:
-                WebClient post = new WebClient(this);
-                post.execute();
+                new EnviaAlunosTask(this).execute();
                 break;
             case R.id.menu_baixar_provas:
                 Intent intent = new Intent(this, ProvasActivity.class);

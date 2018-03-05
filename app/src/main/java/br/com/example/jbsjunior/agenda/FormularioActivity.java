@@ -28,6 +28,7 @@ import java.io.File;
 
 import br.com.example.jbsjunior.agenda.dao.AlunoDAO;
 import br.com.example.jbsjunior.agenda.model.Aluno;
+import br.com.example.jbsjunior.agenda.task.InsereAlunoTask;
 
 public class FormularioActivity extends AppCompatActivity {
 
@@ -105,6 +106,9 @@ public class FormularioActivity extends AppCompatActivity {
                     dao.insert(aluno);
                 }
                 dao.close();
+
+                new InsereAlunoTask(aluno, FormularioActivity.this).execute();
+
                 Toast.makeText(FormularioActivity.this, "Aluno " + aluno.getName() + " Salvo!", Toast.LENGTH_SHORT).show();
                 finish();
                 break;

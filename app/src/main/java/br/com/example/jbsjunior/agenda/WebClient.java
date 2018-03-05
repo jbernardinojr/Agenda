@@ -21,12 +21,12 @@ import okhttp3.Response;
  * Created by junior on 03/05/17.
  */
 
-public class WebClient extends AsyncTask<Void,Void,String>{
+public class WebClient {
 
     public static final MediaType JSON
-            = MediaType.parse("application/json; charset=utf-8");
+            = MediaType.parse("application/json");
 
-    public static final String URL_SITE = "https:www.caelum.com.br/mobile";
+    public String URL = "https:www.caelum.com.br/mobile";
 
     OkHttpClient client = new OkHttpClient();
     private ProgressDialog mDialog;
@@ -36,23 +36,26 @@ public class WebClient extends AsyncTask<Void,Void,String>{
         mContext = context;
     }
 
-    @Override
-    protected void onPreExecute() {
-        mDialog = ProgressDialog.show(mContext, "Enviando Dados", "Aguarde", true);
+
+    public String post (String json) {
+        URL = "https:www.caelum.com.br/mobile";
+        return realizaConexao(json, URL);
     }
 
-    @Override
-    protected String doInBackground(Void... params) {
+    public void insere(String jsonCompleto){
+        URL = "http://192.168.98.177:8080/api/aluno";
+        realizaConexao(jsonCompleto, URL);
+    }
+    
+    public String realizaConexao(String json, String endereco) {
 
         AlunoDAO dao = new AlunoDAO(mContext);
         List<Aluno> alunos = dao.getAlunos();
         dao.close();
-        AlunoConverter converter = new AlunoConverter();
-        String json = converter.convertToJson(alunos);
 
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
-                .url(URL_SITE)
+                .url(endereco)
                 .post(body)
                 .build();
 
@@ -66,15 +69,4 @@ public class WebClient extends AsyncTask<Void,Void,String>{
         return null;
     }
 
-    @Override
-    protected void onPostExecute(String response) {
-
-        if (response != null) {
-            Log.d("Bernardino", response);
-        } else {
-            Log.d("Bernardino", "Response is null");
-        }
-
-        mDialog.dismiss();
-    }
 }
